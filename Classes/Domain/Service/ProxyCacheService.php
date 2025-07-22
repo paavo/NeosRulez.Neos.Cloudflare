@@ -42,7 +42,7 @@ class ProxyCacheService
     {
         try {
             $zoneID = $zones->getZoneID($zoneName);
-            if($zoneID) {
+            if ($zoneID) {
                 $result = $zones->cachePurgeEverything($zoneID);
                 if ($result) {
                     return true;
@@ -65,10 +65,10 @@ class ProxyCacheService
     public function flushProxyCache(string|null $zoneName = null): array
     {
         $result = [];
-        if($this->proxyCacheApiConfiguration) {
+        if ($this->proxyCacheApiConfiguration) {
             foreach ($this->proxyCacheApiConfiguration as $configuration) {
-                if(array_key_exists('apiKey', $configuration) && array_key_exists('zoneName', $configuration)) {
-                    if(!empty($zoneName) && $zoneName === $configuration['zoneName']) {
+                if (array_key_exists('apiKey', $configuration) && array_key_exists('zoneName', $configuration)) {
+                    if ($zoneName === null || $zoneName === $configuration['zoneName']) {
                         $adapter = $this->adapter($configuration['apiKey']);
                         $zones = new Zones($adapter);
                         $result[] = [
