@@ -25,11 +25,11 @@ class CloudflareCommandController extends CommandController
     {
         $result = true;
         foreach ($this->proxyCacheService->flushProxyCache() as $item) {
-            if(!$item['result']) {
+            if (!$item['result']) {
                 $result = false;
             }
         }
-        if($result) {
+        if ($result) {
             $this->outputLine('"Cloudflare proxy caches" are flushed.');
         } else {
             $this->outputLine('Not all "Cloudflare proxy caches" are flushed!');
