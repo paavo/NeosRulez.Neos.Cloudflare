@@ -3,9 +3,17 @@ privilegeTargets:
     'NeosRulez.Neos.Cloudflare:Module.ProxyCacheManagerControllerActions':
       matcher: 'method(NeosRulez\Neos\Cloudflare\Controller\Module\ProxyCacheManagerController->.*Action())'
 
+  Neos\Neos\Security\Authorization\Privilege\ModulePrivilege:
+    'NeosRulez.Neos.Cloudflare:Module.ProxyCacheManager':
+      label: 'General access to the Cloudflare proxy cache manager module'
+      matcher: 'cloudflare/proxyCacheManager'
+
 roles:
   'Neos.Neos:AbstractEditor':
     privileges:
       -
         privilegeTarget: 'NeosRulez.Neos.Cloudflare:Module.ProxyCacheManagerControllerActions'
+        permission: GRANT
+      -
+        privilegeTarget: 'NeosRulez.Neos.Cloudflare:Module.ProxyCacheManager'
         permission: GRANT

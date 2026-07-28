@@ -6,13 +6,14 @@ Neos:
         controller: '\Neos\Neos\Controller\Module\ManagementController'
         description: 'Cloudflare'
         icon: 'fab fa-cloudflare'
-        resource: 'Neos_Neos_Backend_Module_Management'
+        mainStylesheet: 'Lite'
         submodules:
           proxyCacheManager:
             label: 'Proxy Cache Manager'
             controller: '\NeosRulez\Neos\Cloudflare\Controller\Module\ProxyCacheManagerController'
             description: 'Cloudflare Proxy Cache Manager'
             icon: 'fas fa-bolt'
+            mainStylesheet: 'Lite'
             actions:
               index:
                 label: 'Proxy Cache Manager'

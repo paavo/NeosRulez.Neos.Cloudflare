@@ -28,11 +28,13 @@ class CloudflareCommandController extends CommandController
             if (!$item['result']) {
                 $result = false;
             }
+            $this->outputLine('  %s %s', [$item['result'] ? '<success>OK</success>' : '<error>FAILED</error>', $item['zoneName']]);
         }
         if ($result) {
             $this->outputLine('"Cloudflare proxy caches" are flushed.');
         } else {
-            $this->outputLine('Not all "Cloudflare proxy caches" are flushed!');
+            $this->outputLine('Not all "Cloudflare proxy caches" are flushed! See the system log for details.');
+            $this->quit(1);
         }
     }
 

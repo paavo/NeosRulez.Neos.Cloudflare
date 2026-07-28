@@ -10,6 +10,8 @@ use Cloudflare\API\Auth\APIToken;
 use Cloudflare\API\Adapter\Guzzle;
 use Cloudflare\API\Endpoints\Zones;
 use Neos\Flow\Log\ThrowableStorageInterface;
+use Neos\Flow\Log\Utility\LogEnvironment;
+use Psr\Log\LoggerInterface;
 
 class ProxyCacheService
 {
@@ -22,6 +24,12 @@ class ProxyCacheService
      * @var ThrowableStorageInterface
      */
     protected $throwableStorage;
+
+    /**
+     * @Flow\Inject
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
      * @param string $apiKey
@@ -52,7 +60,11 @@ class ProxyCacheService
             }
             return false;
         } catch (\Throwable $e) {
-            echo $e->getMessage() . ' "' . $zoneName . '"' . "\n";
+            // Must not write to stdout: the flush also runs inside the request that publishes content
+            $this->logger->error(
+                sprintf('Could not flush the Cloudflare proxy cache of zone "%s": %s', $zoneName, $e->getMessage()),
+                LogEnvironment::fromMethodName(__METHOD__)
+            );
             $this->throwableStorage->logThrowable($e);
         }
         return false;
